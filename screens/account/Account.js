@@ -5,7 +5,7 @@ import { getCurrentUser, isUserLogged } from '../../utils/actions'
 import { useFocusEffect } from '@react-navigation/native'
 
 import UserGuest from './UserGuest'
-import UserLogged from './UserLogged'
+import UserLogged from './Userlogged'
 
 export default function Account() {
     const [login, setLogin] = useState(null)

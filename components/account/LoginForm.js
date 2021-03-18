@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { Button, Icon, Input } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
 
-import {} from '../../utils/helpers'
+import { validateEmail } from '../../utils/helpers'
+import { loginWithEmailAndPassword } from '../../utils/actions'
 import Loading from '../Loading'
 
 export default function LoginForm() {
@@ -14,7 +16,7 @@ export default function LoginForm() {
     const [loading, setLoading] = useState(false)
 
     const navigation = useNavigation()
-    
+
     const onChange = (e, type) => {
         setFormData({ ...formData, [type]: e.nativeEvent.text })
     }
@@ -24,42 +26,37 @@ export default function LoginForm() {
             return;
         }
 
-        const doLogin = async() => {
-            if (!validateData()) {
-                return;
-            }
-    
-            setLoading(true)
-            const result = await loginWithEmailAndPassword(formData.email, formData.password)
-            setLoading(false)
-    
-            if (!result.statusResponse) {
-                setErrorEmail(result.error)
-                setErrorPassword(result.error)
-                return
-            }
-    
-            navigation.navigate("account")
-        }    
+        setLoading(true)
+        const result = await loginWithEmailAndPassword(formData.email, formData.password)
+        setLoading(false)
+
+        if (!result.statusResponse) {
+            setErrorEmail(result.error)
+            setErrorPassword(result.error)
+            return
+        }
+
+        navigation.navigate("account")
+    }
 
     const validateData = () => {
-            setErrorEmail("")
-            setErrorPassword("")
-            let isValid = true
-    
-            if(!validateEmail(formData.email)) {
-                setErrorEmail("Debes de ingresar un email válido.")
-                isValid = false
-            }
-    
-            if (isEmpty(formData.password)) {
-                setErrorPassword("Debes de ingresar tu contraseña.")
-                isValid = false
-            }
-    
-            return isValid
+        setErrorEmail("")
+        setErrorPassword("")
+        let isValid = true
+
+        if(!validateEmail(formData.email)) {
+            setErrorEmail("Debes de ingresar un email válido.")
+            isValid = false
         }
-    }        
+
+        if (isEmpty(formData.password)) {
+            setErrorPassword("Debes de ingresar tu contraseña.")
+            isValid = false
+        }
+
+        return isValid
+    }
+
 
     return (
         <View style={styles.container}>
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     btn: {
-        backgroundColor: "#6668ac"
+        backgroundColor: "#442484"
     },
     icon: {
         color: "#c1c1c1"

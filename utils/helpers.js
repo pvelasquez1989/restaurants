@@ -3,6 +3,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as Location from 'expo-location'
 
 import { Alert } from 'react-native'
+import { result } from 'lodash';
 
 export function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,4 +27,10 @@ export const loadImageFromGallery = async(array) => {
     response.status = true
     response.image = result.uri
     return response
+}
+
+export const fileToBlob = async(path) => {
+    const file = await fetch(path)
+    const blob = await file.blob()
+    return blob
 }

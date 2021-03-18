@@ -2,11 +2,14 @@ import React, { useState, useRef, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
-
 import Toast from 'react-native-easy-toast'
-import { closeSession } from '../../utils/actions'
 
-export default function Userlogged() {
+import { closeSession, getCurrentUser } from '../../utils/actions'
+import Loading from '../../components/Loading'
+import InfoUser from '../../components/account/InfoUser'
+import AccountOptions from '../../components/account/AccountOptions'
+
+export default function UserLogged() {
     const toastRef = useRef()
     const navigation = useNavigation()
 
@@ -63,12 +66,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: "#FFFFFF",
         borderTopWidth: 1,
-        borderTopColor: "#6668ac",
+        borderTopColor: "#442484",
         borderBottomWidth: 1,
-        borderBottomColor: "#6668ac",
+        borderBottomColor: "#442484",
         paddingVertical: 10
     },
     btnCloseSessionTitle: {
-        color: "#6668ac"
+        color: "#442484"
     }
 })
